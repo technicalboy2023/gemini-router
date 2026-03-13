@@ -1,62 +1,75 @@
 Gemini Router
 
-OpenAI-compatible router for Google Gemini models.
-This router allows using Gemini models with tools like n8n, OpenAI SDKs, and custom applications.
+OpenAI-compatible API router for Google Gemini models.
+This router allows Gemini models to be used with tools like n8n, OpenAI SDKs, and custom AI agents.
+
+---
 
 Features
 
-- Multiple API key support
+- Multiple Gemini API keys
 - Automatic key rotation
 - Cooldown handling
 - Usage tracking
-- Streaming support
-- OpenAI compatible API
-- Works with n8n AI Agent
+- Streaming responses
+- OpenAI compatible endpoints
+- n8n AI Agent support
+- systemd auto-start support
 
 ---
 
-Installation
+Requirements
 
-Clone the repository:
-
-git clone https://github.com/technicalboy2023/gemini-router.git
-cd gemini-router
-
-Create virtual environment:
-
-python3 -m venv venv
-source venv/bin/activate
-
-Install dependencies:
-
-pip install fastapi uvicorn requests python-dotenv
+- Ubuntu / Debian VPS
+- Python 3.9+
+- Git
+- Internet access
 
 ---
 
-Environment Variables
+Installation (Using Installer Script)
 
-Create ".env" file:
+Run the following commands on your VPS:
 
-GEMINI_KEY_1=YOUR_KEY
-GEMINI_KEY_2=YOUR_KEY
+cd /home/aman
+mkdir -p routers
+cd routers
+
+curl -O https://raw.githubusercontent.com/technicalboy2023/gemini-router/main/install-router.sh
+chmod +x install-router.sh
+
+bash install-router.sh gemini-router 5000
+
+This will automatically:
+
+- Clone the repository
+- Create Python virtual environment
+- Install dependencies
+- Create systemd service
+- Start the router
+
+---
+
+Configure API Keys
+
+Edit the ".env" file:
+
+nano /home/aman/routers/gemini-router/.env
+
+Example:
+
+GEMINI_KEY_1=YOUR_API_KEY
+GEMINI_KEY_2=YOUR_API_KEY
 GEMINI_KEY_3=
 GEMINI_KEY_4=
-GEMINI_KEY_5=
-GEMINI_KEY_6=
-GEMINI_KEY_7=
-GEMINI_KEY_8=
-GEMINI_KEY_9=
-GEMINI_KEY_10=
+
+Restart router:
+
+sudo systemctl restart gemini-router
 
 ---
 
-Run Router
-
-uvicorn router:app --host 0.0.0.0 --port 5000
-
----
-
-Endpoints
+API Endpoints
 
 Chat
 
@@ -91,15 +104,15 @@ GET /usage
 
 ---
 
-n8n Setup
+Check Router Status
 
-Base URL:
+systemctl status gemini-router
 
-http://VPS_IP:5000/v1
+---
 
-Model example:
+Router Logs
 
-gemini-2.5-flash
+journalctl -u gemini-router -f
 
 ---
 
