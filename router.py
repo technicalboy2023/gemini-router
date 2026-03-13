@@ -163,7 +163,7 @@ def call_gemini(messages,model):
                 if r.status_code in [429,403]:
 
                     cooldown[key] = time.time() + 10
-                    logging.warning(f"Key cooldown {key}")
+                    logging.warning(f"Key cooldown")
 
                     break
 
@@ -239,7 +239,6 @@ async def chat(data:dict):
     reply = call_gemini(messages,model)
 
     if stream:
-
         return StreamingResponse(stream_text(reply,model),media_type="text/event-stream")
 
     return {
